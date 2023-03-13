@@ -25,9 +25,7 @@ pub mod validate;
 #[tokio::main]
 async fn main() {
     dotenv::dotenv().ok();
-
     tracing_subscriber::fmt::init();
-
     let config = CONFIG.clone();
 
     let addr: SocketAddr = config
@@ -43,6 +41,8 @@ async fn main() {
 }
 
 fn app() -> Router {
+    // Shared client connection for Reqwest
+    let client = reqwest::Client::new();
     let routes = Router::new()
         .route("/health", get(get_health_endpoint))
         .route("/posts/:id", get(get_post_endpoint))
@@ -50,6 +50,7 @@ fn app() -> Router {
 
     let app = Router::new()
         .merge(routes)
+        .with_state(client)
         .layer(TraceLayer::new_for_http());
 
     app

@@ -1,5 +1,10 @@
-use axum::{extract::Path, response::IntoResponse, Json};
+use axum::{
+    extract::{Path, State},
+    response::IntoResponse,
+    Json,
+};
 use http::StatusCode;
+use reqwest::Client;
 use serde_json::{from_str, json};
 
 use crate::{config::POSTS_URL, errors::ApiError, validate::validate};
@@ -33,10 +38,10 @@ pub struct CreatePostResponse {
 /// POST "/posts"
 /// Creates a post
 pub async fn create_post_endpoint(
+    State(client): State<Client>,
     Json(payload): Json<CreatePostRouteParams>,
 ) -> Result<impl IntoResponse, ApiError> {
     validate(&payload)?;
-    let client = reqwest::Client::new(); // TODO: move to app state?
     let response = client
         .post(POSTS_URL.clone())
         .body(json!(payload).to_string())
@@ -70,13 +75,14 @@ mod tests {
 
     #[tokio::test]
     async fn test_create_post() {
+        let client = reqwest::Client::new();
         let request = CreatePostRouteParams {
             title: "Test Title".to_string(),
             body: "Test Body".to_string(),
             userId: 5,
         };
 
-        let response = create_post_endpoint(Json(request))
+        let response = create_post_endpoint(State(client), Json(request))
             .await
             .unwrap()
             .into_response();
