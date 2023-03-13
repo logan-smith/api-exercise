@@ -2,12 +2,12 @@ use axum::{
     routing::{get, post},
     Router,
 };
-use std::net::SocketAddr;
+use std::{collections::HashMap, net::SocketAddr};
 use tower_http::trace::TraceLayer;
 
 use crate::config::CONFIG;
 use crate::handlers::health::get_health_endpoint;
-use crate::handlers::post::{create_post_endpoint, get_post_endpoint};
+use crate::handlers::url::{create_url_endpoint, get_url_endpoint};
 
 #[macro_use]
 extern crate lazy_static;
@@ -41,16 +41,15 @@ async fn main() {
 }
 
 fn app() -> Router {
-    // Shared client connection for Reqwest
-    let client = reqwest::Client::new();
+    let urls: HashMap<String, String> = HashMap::new();
     let routes = Router::new()
         .route("/health", get(get_health_endpoint))
-        .route("/posts/:id", get(get_post_endpoint))
-        .route("/posts", post(create_post_endpoint));
+        .route("/:short_url_code", get(get_url_endpoint))
+        .route("/", post(create_url_endpoint));
 
     let app = Router::new()
         .merge(routes)
-        .with_state(client)
+        .with_state(urls)
         .layer(TraceLayer::new_for_http());
 
     app

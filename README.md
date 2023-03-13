@@ -15,11 +15,6 @@ Makes requests to [JSON Placeholder API](https://jsonplaceholder.typicode.com/).
   - [Endpoints](#endpoints)
     - [Healthcheck](#healthcheck)
       - [Response](#response)
-    - [GET Posts](#get-posts)
-      - [Response](#response-1)
-    - [POST Posts](#post-posts)
-      - [Request](#request)
-      - [Response](#response-2)
   - [License](#license)
 
 ## Installation
@@ -90,61 +85,6 @@ Example:
 
 ```shell
 curl -X GET http://127.0.0.1:3000/health
-```
-
-### GET Posts
-
-Wrapper around GET posts endpoint from JSON placeholder api
-
-`GET /posts/{id}`
-
-#### Response
-
-`200 OK`
-
-```json
-{
-	"id": 1,
-	"title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
-	"body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto",
-	"userId": 1
-}
-```
-
-Example:
-
-```shell
-curl -X GET http://127.0.0.1:8000/posts/1
-```
-
-### POST Posts
-
-Wrapper around POST posts endpoint from JSON placeholder api
-
-`POST /posts`
-
-#### Request
-
-| Param  | Type    | Description                     | Required | Validations           |
-| ------ | ------- | ------------------------------- | :------: | --------------------- |
-| title  | String  | The post's title                |   yes    | at least 2 characters |
-| body   | String  | The post's body                 |   yes    | none                  |
-| userId | Integer | The user creating the post's id |   yes    | none                  |
-
-#### Response
-
-`200 OK`
-
-```json
-{
-	"id": 101
-}
-```
-
-Example:
-
-```shell
-curl -X POST http://127.0.0.1:8000/posts
 ```
 
 ## License

@@ -22,7 +22,6 @@ pub struct Config {
 // Throw the Config struct into a CONFIG lazy_static to avoid multiple processing
 lazy_static! {
     pub static ref CONFIG: Config = get_config();
-    pub static ref POSTS_URL: String = format!("{}/{}", CONFIG.api_url, "posts");
 }
 
 /// Use envy to inject dotenv and env vars into the Config struct

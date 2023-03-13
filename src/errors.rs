@@ -66,6 +66,7 @@ impl IntoResponse for ApiError {
     fn into_response(self) -> Response {
         match self {
             ApiError::BadRequest(error) => (StatusCode::BAD_REQUEST, error).into_response(),
+            ApiError::NotFound(error) => (StatusCode::NOT_FOUND, error).into_response(),
             _ => (StatusCode::INTERNAL_SERVER_ERROR, "Internal Server Error").into_response(),
         }
     }
