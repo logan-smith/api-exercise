@@ -80,7 +80,7 @@ cargo doc --no-deps --open
 
 Determine if the system is healthy.
 
-`GET /`
+`GET /health`
 
 #### Response
 

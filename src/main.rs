@@ -30,7 +30,7 @@ async fn main() {
     let config = CONFIG.clone();
 
     let routes = Router::new()
-        .route("/", get(get_health_endpoint))
+        .route("/health", get(get_health_endpoint))
         .route("/posts/:id", get(get_post_endpoint))
         .route("/posts", post(create_post_endpoint));
 
