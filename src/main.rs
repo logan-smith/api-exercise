@@ -19,6 +19,7 @@ extern crate validator_derive;
 pub mod config;
 pub mod errors;
 pub mod handlers;
+pub mod tests;
 pub mod validate;
 
 #[tokio::main]
@@ -29,6 +30,19 @@ async fn main() {
 
     let config = CONFIG.clone();
 
+    let addr: SocketAddr = config
+        .server
+        .parse()
+        .expect("Unable to parse socket address");
+
+    tracing::debug!("listening on {}", addr);
+    axum::Server::bind(&addr)
+        .serve(app().into_make_service())
+        .await
+        .unwrap();
+}
+
+fn app() -> Router {
     let routes = Router::new()
         .route("/health", get(get_health_endpoint))
         .route("/posts/:id", get(get_post_endpoint))
@@ -38,14 +52,5 @@ async fn main() {
         .merge(routes)
         .layer(TraceLayer::new_for_http());
 
-    let addr: SocketAddr = config
-        .server
-        .parse()
-        .expect("Unable to parse socket address");
-
-    tracing::debug!("listening on {}", addr);
-    axum::Server::bind(&addr)
-        .serve(app.into_make_service())
-        .await
-        .unwrap();
+    app
 }

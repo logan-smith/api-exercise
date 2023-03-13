@@ -32,3 +32,8 @@ tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 uuid = { version = "0.7", features = ["serde", "v4"] }
 validator = "0.8.0"
 validator_derive = "0.8.0"
+
+[dev-dependencies]
+hyper = "0.14.25"
+mime = "0.3.16"
+tower = "0.4.13"

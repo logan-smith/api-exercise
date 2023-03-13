@@ -8,27 +8,27 @@ use crate::{config::POSTS_URL, errors::ApiError, validate::validate};
 #[allow(non_snake_case)]
 #[derive(Debug, Deserialize, Serialize, PartialEq, Eq)]
 pub struct Post {
-    id: u64,
-    title: String,
-    body: String,
-    userId: u64,
+    pub id: u64,
+    pub title: String,
+    pub body: String,
+    pub userId: u64,
 }
 
 #[allow(non_snake_case)]
-#[derive(Debug, Deserialize, Serialize, Validate)]
+#[derive(Debug, Deserialize, Serialize, Validate, PartialEq, Eq)]
 pub struct CreatePostRouteParams {
     #[validate(length(
         min = 2,
         message = "Title is required and must be at least 2 characters"
     ))]
-    title: String,
-    body: String,
-    userId: u64,
+    pub title: String,
+    pub body: String,
+    pub userId: u64,
 }
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, PartialEq, Eq)]
 pub struct CreatePostResponse {
-    id: u64,
+    pub id: u64,
 }
 
 /// POST "/posts"
