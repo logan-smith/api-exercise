@@ -8,8 +8,6 @@ mod tests {
 
     use crate::app; // for `oneshot` and `ready`
 
-    // use crate::main::app;
-
     #[tokio::test]
     async fn test_get_health() {
         let app = app();
