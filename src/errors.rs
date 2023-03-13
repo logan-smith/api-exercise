@@ -6,7 +6,6 @@ use axum::{
 };
 use derive_more::Display;
 use log::*;
-use uuid::parser::ParseError;
 
 #[derive(Debug, Display, PartialEq, Eq)]
 pub enum ApiError {
@@ -45,14 +44,6 @@ impl From<&String> for ErrorResponse {
 impl From<Vec<String>> for ErrorResponse {
     fn from(errors: Vec<String>) -> Self {
         ErrorResponse { errors }
-    }
-}
-
-/// Convert ParseErrors to ApiErrors
-impl From<ParseError> for ApiError {
-    fn from(error: ParseError) -> ApiError {
-        error!("Parse Error {:?}", error);
-        ApiError::ParseError(error.to_string())
     }
 }
 

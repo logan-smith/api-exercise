@@ -1,7 +1,6 @@
 use axum::{extract::Path, response::IntoResponse, Json};
 use http::StatusCode;
 use serde_json::{from_str, json};
-use validator::Validate;
 
 use crate::{config::POSTS_URL, errors::ApiError, validate::validate};
 
