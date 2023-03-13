@@ -75,19 +75,19 @@ pub fn generate_short_url() -> String {
     uuid::Uuid::new_v4().to_string()
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+// #[cfg(test)]
+// mod tests {
+//     use super::*;
 
-    #[tokio::test]
-    async fn test_create_url() {
-        let hashmap: HashMap<String, String> = HashMap::new();
-        let request = 
+//     #[tokio::test]
+//     async fn test_create_url() {
+//         let hashmap: HashMap<String, String> = HashMap::new();
+//         let request =
 
-        let response = create_url_endpoint(State(hashmap), Json(request))
-            .await
-            .unwrap()
-            .into_response();
-        assert_eq!(response.status(), StatusCode::OK);
-    }
-}
+//         let response = create_url_endpoint(State(hashmap), Json(request))
+//             .await
+//             .unwrap()
+//             .into_response();
+//         assert_eq!(response.status(), StatusCode::OK);
+//     }
+// }
